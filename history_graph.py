@@ -43,7 +43,7 @@ class HistoryGraph:
 
         self.networkx_history_graph = _make_nx_graph(self.history_graph)
 
-    def barplot_most_connected(self, **mpl_kwargs):
+    def barplot_most_connected(self, figsize=(6, 12), **mpl_kwargs):
 
         g = self.networkx_history_graph
 
@@ -53,9 +53,10 @@ class HistoryGraph:
         names = [a[0] for a in degrees]
         k = [a[1] for a in degrees]
 
+        plt.figure(figsize=figsize)
         df = DataFrame(index=names, data=k)
-        df.plot(kind='barh', **mpl_kwargs)
-
+        df.plot(kind='barh', figsize=figsize, legend=False, **mpl_kwargs)
+        plt.legend().set_visible(False)
         plt.title('Connections per cognitive scientist')
 
     def refresh_networkx_history_graph(self):
