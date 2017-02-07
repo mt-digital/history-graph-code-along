@@ -74,29 +74,11 @@ class HistoryGraph:
 
         _write_history_graph(self.history_graph, self.history_graph_path)
 
-        p = Popen(['git', 'add', self.history_graph_path])
-        if p.returncode > 0:
-            raise RuntimeError(
-                'adding history graph failed! Error message:\n{}'.format(
-                    p.communicate()
-                )
-            )
+        p = call(['git', 'add', self.history_graph_path])
 
-        p = Popen(['git', 'commit', '-m', commit_message])
-        if p.returncode > 0:
-            raise RuntimeError(
-                'Commit failed! Error message:\n{}'.format(
-                    p.communicate()
-                )
-            )
+        p = call(['git', 'commit', '-m', commit_message])
 
-        p = Popen(['git', 'push', 'origin', 'master'])
-        if p.returncode > 0:
-            raise RuntimeError(
-                'Push to github failed! Error message:\n{}'.format(
-                    p.communicate()
-                )
-            )
+        p = call(['git', 'push', 'origin', 'master'])
 
 
 def _load_history_graph(history_graph_path):
